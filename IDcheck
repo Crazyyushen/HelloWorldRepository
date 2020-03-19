@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace projecthelloworld
+{
+    public partial class IDcheck : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            string id = TextBox1.Text;
+            bool adm = true;
+            if (id.Length != 18)
+            {
+                adm = false;
+                Response.Write("格式错误，请重新输入。");
+                return;
+            }
+            string year = id.Substring(6, 4);
+            string month = id.Substring(10, 2);
+            string day = id.Substring(12, 2);
+            string sex = id.Substring(16, 1);
+            char exam = id[17];
+            {
+                for (int i = 0; i <= 16; i++)
+                {
+                    if (id[i] <= '0' || id[i] >= '9')
+                    {
+                        adm = false;
+                    }
+                }
+                if ((exam <= '9' && exam >= '0') || (exam == 'x'))
+                {
+                    adm = true;
+                }
+                else
+                {
+                    adm = false;
+                }
+                if (int.Parse(year) > 2020 || int.Parse(year) < 1949)
+                {
+                    adm = false;
+                }
+                if (int.Parse(month) > 12 || int.Parse(month) < 1)
+                {
+                    adm = false;
+                }
+                if (int.Parse(day) > 31 || int.Parse(day) < 1)
+                {
+                    adm = false;
+                }
+                if (int.Parse(sex) % 2 == 0)
+                {
+                    sex = "女";
+                }
+                else
+                {
+                    sex = "男";
+                }
+            }
+            if (adm == true)
+            {
+                Response.Write("出生日期：" + year +"."+ month +"."+ day+"<br>");
+                Response.Write("\n\n性别：" + sex);
+            }
+        
+            else
+            {
+                Response.Write("格式错误，请重新输入。");
+            }
+        }
+    }
+}
